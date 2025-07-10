@@ -9,14 +9,14 @@ import java.util.Properties;
 
 public class SimpleQuery {
     public static void main(String[] args) {
-        String url = "jdbc:postgresql://localhost:5432/vadim"; // замените на ваши параметры
-        String user = "vadim_user"; // замените на ваше имя пользователя
-        String password = "1111"; // замените на ваш пароль
+        String url = "jdbc:postgresql://localhost:5432/vadim"; 
+        String user = "vadim_user"; 
+        String password = "1111"; 
 
         try (Connection conn = DriverManager.getConnection(url, user, password);
              Statement stmt = conn.createStatement()) {
 
-            String sql = "SELECT * FROM customers"; // ваш запрос
+            String sql = "SELECT * FROM customers"; 
             ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
