@@ -1,17 +1,12 @@
---DROP TABLE IF EXISTS sales CASCADE;
---DROP TABLE IF EXISTS dishes CASCADE;
---DROP TABLE IF EXISTS customers CASCADE;
-
 BEGIN;
--- Создание таблицы клиентов
+
 CREATE TABLE customers (
     customer_id SERIAL PRIMARY KEY,
-    name TEXT NOT NULL,
-    email TEXT NOT NULL UNIQUE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    name TEXT,
+    email TEXT
 );
 
--- Вставка данных в таблицу клиентов
+
 INSERT INTO customers (name, email) VALUES
 ('Иван Иванов', 'ivanov@gmail.com'),
 ('Мария Петрова', 'petrova@gmail.com'),
@@ -39,16 +34,15 @@ INSERT INTO customers (name, email) VALUES
 ('Ксения Лебедева', 'lebedova@gmail.com'),
 ('Вячеслав Фролов', 'frolov@gmail.com');
 
--- Создание таблицы блюд
+
 CREATE TABLE dishes (
     dish_id SERIAL PRIMARY KEY,
-    dish_name TEXT NOT NULL UNIQUE,
+    dish_name TEXT,
     description TEXT,
-    price NUMERIC(6, 2) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    price NUMERIC(6, 2)
 );
 
--- Вставка данных в таблицу блюд
+
 INSERT INTO dishes (dish_name, description, price) VALUES
 ('Пицца Маргарита', 'Классическая пицца с томатным соусом, моцареллой и базиликом', 600.00),
 ('Пицца Пепперони', 'Пицца с томатным соусом, моцареллой и колбасой пепперони', 700.00),
@@ -69,7 +63,7 @@ INSERT INTO dishes (dish_name, description, price) VALUES
 ('Пицца Тоскана', 'Пицца с салями, оливками и руколой', 750.00),
 ('Пицца Веганская', 'Пицца с овощами, без сыра, на растительной основе', 640.00);
 
--- Создание таблицы продаж
+
 CREATE TABLE sales (
     sale_id SERIAL PRIMARY KEY,
     dish_id INTEGER,
@@ -77,13 +71,11 @@ CREATE TABLE sales (
     quantity INTEGER,
     total_amount NUMERIC(6, 2),
     sale_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    sale_day DATE NOT NULL DEFAULT CURRENT_DATE,
-    sale_weekday TEXT NOT NULL DEFAULT TO_CHAR(CURRENT_DATE, 'Day'),
-	CONSTRAINT fk_dish FOREIGN KEY (dish_id) REFERENCES dishes(dish_id) ON DELETE CASCADE,
-    CONSTRAINT fk_customer FOREIGN KEY (customer_id) REFERENCES customers(customer_id) ON DELETE CASCADE
+	CONSTRAINT fk_dish FOREIGN KEY (dish_id) REFERENCES dishes(dish_id),
+    CONSTRAINT fk_customer FOREIGN KEY (customer_id) REFERENCES customers(customer_id) 
 );
 
--- Вставка данных в таблицу продаж
+
 INSERT INTO sales (dish_id, customer_id, quantity, total_amount, sale_date) VALUES
 
 (1, 1, 2, 500.00, '2024-04-25 12:30:00'),
