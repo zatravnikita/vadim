@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmailService {
 
-
     private final JdbcTemplate jdbcTemplate ;
 
     public EmailService(JdbcTemplate jdbcTemplate) {
