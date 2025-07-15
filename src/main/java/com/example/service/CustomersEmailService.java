@@ -7,16 +7,16 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class EmailService {
+public class CustomersEmailService {
 
     private final JdbcTemplate jdbcTemplate ;
 
-    public EmailService(JdbcTemplate jdbcTemplate) {
+    public CustomersEmailService(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
     @EventListener(ApplicationReadyEvent.class)
-     public void findAll() {
+     public void findAllEmail() {
          String sql = "SELECT * FROM customers";
          jdbcTemplate.query(sql, (rs) ->{
         String email = rs.getString("email");
