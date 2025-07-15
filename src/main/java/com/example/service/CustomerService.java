@@ -25,7 +25,7 @@ public class CustomerService {
             ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
-                int id = rs.getInt("customer_id");
+                int id = rs.getInt("id");
                 String name = rs.getString("name");
                 String email = rs.getString("email");
                 System.out.println("ID: " + id + ", Name: " + name + ", Email: " + email);
