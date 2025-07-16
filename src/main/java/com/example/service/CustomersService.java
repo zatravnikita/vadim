@@ -9,20 +9,23 @@ import org.springframework.stereotype.Service;
 @Service
 public class CustomersService {
 
-    private final JdbcTemplate jdbcTemplate ;
+    private final JdbcTemplate jdbcTemplate;
 
     public CustomersService(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
     @EventListener(ApplicationReadyEvent.class)
-     public void findAllEmails() {
-         String sql = "SELECT * FROM customers";
-         jdbcTemplate.query(sql, (rs) ->{
-        String email = rs.getString("email");
-        System.out.println(", Email: " + email);
-    });
-}}
+    public void findAll() {
+        String sql = "SELECT * FROM customers";
+        jdbcTemplate.query(sql, (rs) -> {
+            int id = rs.getInt("id");
+            String name = rs.getString("name");
+            String email = rs.getString("email");
+            System.out.println("ID: " + id + ", Name: " + name + ", Email: " + email);
+        });
+    }
+}
 
 
 
