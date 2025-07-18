@@ -5,17 +5,31 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
     <changeSet id="create_reservation" author="zn">
+        <createTable tableName="books">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="author" type="text"/>
+            <column name="work" type="text"/>
+        </createTable>
+        <createTable tableName="readers">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="reader" type="text"/>
+            <column name="nomer_reader" type="int"/>
+        </createTable>
         <createTable tableName="reservation">
             <column name="id" type="int" autoIncrement="true"/>
-            <column name="book_id" type="varchar(255)"/>
-            <column name="reader_id" type="varchar(255)"/>
-            <column name="get_book" type="varchar(255)"/>
-            <column name="prom_book" type="varchar(255)"/>
-            <column name="return_book" type="varchar(255)"/>
+            <column name="book_id" type="int">
+                <constraints nullable="false" foreignKeyName="fk_books" references="books(id)"/>
+            </column>
+            <column name="reader_id" type="int">
+                <constraints nullable="false" foreignKeyName="fk_readers" references="readers(id)"/>
+            </column>
+            <column name="get_date" type="date"/>
+            <column name="promise_date" type="date"/>
+            <column name="return_date" type="date"/>
         </createTable>
-        <loadData  file="db/changelog/v1/files/reservation.csv"
-                  schemaName="public"
-                  tableName="reservation">
-        </loadData>
     </changeSet>
 </databaseChangeLog>
