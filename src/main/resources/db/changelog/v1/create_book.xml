@@ -9,16 +9,77 @@
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="author" type="text"/>
-            <column name="work" type="text"/>
+            <column name="author" type="varchar(255)"/>
+            <column name="work" type="varchar(255)"/>
         </createTable>
+        <loadData  file="db/changelog/v1/files/books.csv"
+                   schemaName="public"
+                   tableName="books">
+        </loadData>
+
+
+
+
+
+        <createTable tableName="books_War">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="book_id" type="int">
+                <constraints nullable="false" foreignKeyName="fk_books_War" references="books(id)"/>
+            </column>
+        </createTable>
+
+
+
+
+        <createTable tableName="books_1984">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="book_id" type="int">
+                <constraints nullable="false" foreignKeyName="fk_books_1984" references="books(id)"/>
+            </column>
+        </createTable>
+
+
+
+
+        <createTable tableName="books_">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="book_id" type="int">
+                <constraints nullable="false" foreignKeyName="fk_books_capital" references="books(id)"/>
+            </column>
+        </createTable>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         <createTable tableName="readers">
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="reader" type="text"/>
+            <column name="reader" type="varchar(255)"/>
             <column name="nomer_reader" type="int"/>
         </createTable>
+        <loadData  file="db/changelog/v1/files/readers.csv"
+                   schemaName="public"
+                   tableName="readers">
+        </loadData>
         <createTable tableName="reservation">
             <column name="id" type="int" autoIncrement="true"/>
             <column name="book_id" type="int">
@@ -31,5 +92,9 @@
             <column name="promise_date" type="date"/>
             <column name="return_date" type="date"/>
         </createTable>
+        <loadData  file="db/changelog/v1/files/reservation.csv"
+                   schemaName="public"
+                   tableName="reservation">
+        </loadData>
     </changeSet>
 </databaseChangeLog>

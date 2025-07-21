@@ -1,2 +1,3 @@
-com\example\service\Proba.class
+com\example\service\BookService.class
+com\example\runner\AppRun.class
 com\example\ExampleApplication.class
