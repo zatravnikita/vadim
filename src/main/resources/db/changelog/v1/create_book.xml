@@ -11,64 +11,12 @@
             </column>
             <column name="author" type="varchar(255)"/>
             <column name="work" type="varchar(255)"/>
+            <column name="copy" type="int"/>
         </createTable>
         <loadData  file="db/changelog/v1/files/books.csv"
                    schemaName="public"
                    tableName="books">
         </loadData>
-
-
-
-
-
-        <createTable tableName="books_War">
-            <column name="id" type="int" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="book_id" type="int">
-                <constraints nullable="false" foreignKeyName="fk_books_War" references="books(id)"/>
-            </column>
-        </createTable>
-
-
-
-
-        <createTable tableName="books_1984">
-            <column name="id" type="int" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="book_id" type="int">
-                <constraints nullable="false" foreignKeyName="fk_books_1984" references="books(id)"/>
-            </column>
-        </createTable>
-
-
-
-
-        <createTable tableName="books_">
-            <column name="id" type="int" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="book_id" type="int">
-                <constraints nullable="false" foreignKeyName="fk_books_capital" references="books(id)"/>
-            </column>
-        </createTable>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         <createTable tableName="readers">
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true"/>
