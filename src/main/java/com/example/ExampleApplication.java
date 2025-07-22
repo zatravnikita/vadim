@@ -2,14 +2,8 @@ package com.example;
 
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-
-
-
 import java.io.IOException;
-
 import org.springframework.boot.SpringApplication;
-
 
 @SpringBootApplication
 public class ExampleApplication {

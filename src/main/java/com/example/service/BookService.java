@@ -1,7 +1,7 @@
 package com.example.service;
 
 
-import com.example.runner.AppRun;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +19,7 @@ public class BookService {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-
     public void returnBook(String readerIdReturn, String bookReturn) {
-
         String sql = "UPDATE reservation SET return_date = ? FROM public.books_instance bi, public.readers rea WHERE reservation.books_instance_id = bi.id AND reservation.reader_id = rea.id AND bi.number = ? AND rea.number = ?";
         jdbcTemplate.update(sql, ps -> {
             ps.setDate(1, new Date(System.currentTimeMillis()));

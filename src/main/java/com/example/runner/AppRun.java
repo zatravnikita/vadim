@@ -38,7 +38,6 @@ public class AppRun implements CommandLineRunner {
                 switch (x) {
                     case 1:
 
-
                         System.out.println("Введите номер читательского билета");
                         String readerId = scanner.nextLine();
 
