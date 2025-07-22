@@ -1,12 +1,8 @@
-package com.example.Controller;
+package com.example.сontroller;
 import com.example.service.BookService;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.print.Book;
-import java.sql.Date;
 import java.time.LocalDate;
 
 @RestController
