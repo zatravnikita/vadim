@@ -38,47 +38,35 @@ public class AppRun implements CommandLineRunner {
                 switch (x) {
                     case 1:
 
-                        System.out.println("Введите Id читателя");
-                        int readerId = scanner.nextInt();
+
+                        System.out.println("Введите номер читательского билета");
+                        String readerId = scanner.nextLine();
 
                         scanner.nextLine();
 
-                        System.out.println("Введите автора книги");
-                        String authorBook = scanner.nextLine();
-
-                        System.out.println("Введите название книги");
-                        String workBook = scanner.nextLine();
-
-                        System.out.println("Введите номер копии книги");
-                        int copyBook = scanner.nextInt();
-
+                        System.out.println("Введите номер экземпляра книги");
+                        String bookNumber = scanner.nextLine();
 
                         System.out.println("Введите дату обещанного возврата (в формате ГГГГ-ММ-ДД):");
-                        String stringPromise = scanner.next();
+                        String stringPromise = scanner.nextLine();
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                         LocalDate promiseDate = LocalDate.parse(stringPromise, formatter);
 
-                        bookService.reserveBook(authorBook, workBook, copyBook, promiseDate, readerId);
+                        bookService.reserveBook(bookNumber, readerId ,promiseDate);
                         System.out.println("Обновление данных прошло успешно");
                         break;
 
                     case 2:
 
-                        System.out.println("Введите автора книги");
-                        String authorBookReturn = scanner.next();
+                        System.out.println("Введите номер экземпля́ра книги");
+                        String bookReturn = scanner.nextLine();
                         scanner.nextLine();
 
-                        System.out.println("Введите название книги");
-                        String workBookReturn = scanner.next();
+                        System.out.println("Введите номер читательского билета");
+                        String readerIdReturn = scanner.nextLine();
 
-                        System.out.println("Введите Id читателя");
-                        int readerIdReturn = scanner.nextInt();
-                        scanner.nextLine();
 
-                        System.out.println("Номер копии книги");
-                        int copyBookReturn = scanner.nextInt();
-
-                        bookService.returnBook(readerIdReturn, authorBookReturn, workBookReturn,  copyBookReturn);
+                        bookService.returnBook(readerIdReturn, bookReturn);
                         System.out.println("Обновление данных прошло успешно");
                         break;
                     default:

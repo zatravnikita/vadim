@@ -20,37 +20,31 @@ public class BookService {
     }
 
 
-    public void returnBook(Integer readerIdReturn, String authorBookReturn, String workBookReturn, Integer copyBookReturn) {
-        String sql = "UPDATE reservation r SET return_date = ? FROM books b WHERE r.book_id = b.id AND r.reader_id = ? AND b.author = ? AND b.work = ? AND b.copy = ?";
+    public void returnBook(String readerIdReturn, String bookReturn) {
 
+        String sql = "UPDATE reservation SET return_date = ? FROM public.books_instance bi, public.readers rea WHERE reservation.books_instance_id = bi.id AND reservation.reader_id = rea.id AND bi.number = ? AND rea.number = ?";
         jdbcTemplate.update(sql, ps -> {
-            ps.setDate(1, new Date(System.currentTimeMillis())); // return_date
-            ps.setInt(2, readerIdReturn);
-            ps.setString(3, authorBookReturn);
-            ps.setString(4, workBookReturn);
-            ps.setInt(5, copyBookReturn);
+            ps.setDate(1, new Date(System.currentTimeMillis()));
+            ps.setString(2, readerIdReturn);
+            ps.setString(3, bookReturn);
         });
     }
 
-    public synchronized void reserveBook(String authorBook, String workBook,Integer copyBook ,LocalDate promiseDate, Integer readerId) {
-        String sqlCheck = "SELECT COUNT(*) FROM reservation r JOIN books b ON r.book_id = b.id WHERE b.author = ? AND b.work = ? AND b.copy = ? AND r.return_date IS NULL";
-        Integer reserveCheck = jdbcTemplate.queryForObject(sqlCheck, Integer.class, authorBook, workBook, copyBook);
+    public synchronized void reserveBook(String bookNumber, String readerId, LocalDate promiseDate) {
+        String sqlCheck = "SELECT COUNT(*) FROM reservation r JOIN books_instance b ON r.books_instance_id = b.id WHERE b.number = ? AND r.return_date IS NULL";
+        Integer reserveCheck = jdbcTemplate.queryForObject(sqlCheck, Integer.class, bookNumber);
         if (reserveCheck == 0) {
-            String sqlInsert = "INSERT INTO reservation (book_id, reader_id, get_date, promise_date) " +
-                    "SELECT b.id, ?, ?, ? FROM books b WHERE b.author = ? AND b.work = ? AND b.copy = ?";
+            String sqlInsert = "INSERT INTO reservation (books_instance_id, reader_id, get_date, promise_date)" +
+                     "SELECT bi.id, rea.id, ?, ? FROM public.books_instance bi, public.readers rea WHERE bi.number = ? AND rea.number = ?";
+
             jdbcTemplate.update(sqlInsert, ps -> {
-                ps.setInt(1, readerId);
-                ps.setDate(2, new Date(System.currentTimeMillis()));
-                ps.setDate(3, java.sql.Date.valueOf(promiseDate));
-                ps.setString(4, authorBook);
-                ps.setString(5, workBook);
-                ps.setInt(6, copyBook );
+                ps.setDate(1, new java.sql.Date(System.currentTimeMillis()));
+                ps.setDate(2, java.sql.Date.valueOf(promiseDate));
+                ps.setString(3, bookNumber);
+                ps.setString(4, readerId);
             });
         } else {
             throw new IllegalStateException("Книга уже зарезервирована");
         }
     }
-
-
 }
-

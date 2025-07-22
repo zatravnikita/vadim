@@ -5,34 +5,49 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
     <changeSet id="create_reservation" author="zn">
+        <createTable tableName="readers">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="fio" type="varchar(255)"/>
+            <column name="number" type="varchar(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+      <loadData  file="db/changelog/v1/files/readers.csv"
+                  schemaName="public"
+                  tableName="readers">
+        </loadData>
         <createTable tableName="books">
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
             <column name="author" type="varchar(255)"/>
             <column name="work" type="varchar(255)"/>
-            <column name="copy" type="int"/>
         </createTable>
         <loadData  file="db/changelog/v1/files/books.csv"
                    schemaName="public"
                    tableName="books">
         </loadData>
-
-        <createTable tableName="readers">
+        <createTable tableName="books_instance">
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="reader" type="varchar(255)"/>
-            <column name="nomer_reader" type="int"/>
+            <column name="book_id" type="int">
+                <constraints nullable="false" foreignKeyName="fk_books" references="books(id)"/>
+            </column>
+            <column name="number" type="varchar(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
         </createTable>
-        <loadData  file="db/changelog/v1/files/readers.csv"
+        <loadData  file="db/changelog/v1/files/books_instance.csv"
                    schemaName="public"
-                   tableName="readers">
+                   tableName="books_instance">
         </loadData>
         <createTable tableName="reservation">
             <column name="id" type="int" autoIncrement="true"/>
-            <column name="book_id" type="int">
-                <constraints nullable="false" foreignKeyName="fk_books" references="books(id)"/>
+            <column name="books_instance_id" type="int">
+                <constraints nullable="false" foreignKeyName="fk_books_inst" references="books_instance(id)"/>
             </column>
             <column name="reader_id" type="int">
                 <constraints nullable="false" foreignKeyName="fk_readers" references="readers(id)"/>
