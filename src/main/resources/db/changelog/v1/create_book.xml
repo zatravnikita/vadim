@@ -17,6 +17,7 @@
                    schemaName="public"
                    tableName="books">
         </loadData>
+
         <createTable tableName="readers">
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true"/>
