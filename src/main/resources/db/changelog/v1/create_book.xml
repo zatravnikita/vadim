@@ -4,20 +4,31 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+
     <changeSet id="create_reservation" author="zn">
-        <createTable tableName="readers">
+
+
+        <createTable tableName="users">
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
             <column name="fio" type="varchar(255)"/>
-            <column name="number" type="varchar(255)">
+            <column name="number" type="varchar(255)"/>
+            <column name="password" type="varchar(255)"/>
+            <column name="login" type="varchar(255)">
                 <constraints nullable="false" unique="true"/>
             </column>
+            <column name="authority" type="varchar(255)"/>
+            <column name="enabled" type="boolean"/>
         </createTable>
-      <loadData  file="db/changelog/v1/files/readers.csv"
+        <loadData file="db/changelog/v1/files/users.csv"
                   schemaName="public"
-                  tableName="readers">
+                  tableName="users">
         </loadData>
+
+
+
         <createTable tableName="books">
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true"/>
@@ -25,10 +36,13 @@
             <column name="author" type="varchar(255)"/>
             <column name="work" type="varchar(255)"/>
         </createTable>
-        <loadData  file="db/changelog/v1/files/books.csv"
-                   schemaName="public"
-                   tableName="books">
+        <loadData file="db/changelog/v1/files/books.csv"
+                  schemaName="public"
+                  tableName="books">
         </loadData>
+
+
+
         <createTable tableName="books_instance">
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true"/>
@@ -40,25 +54,31 @@
                 <constraints nullable="false" unique="true"/>
             </column>
         </createTable>
-        <loadData  file="db/changelog/v1/files/books_instance.csv"
-                   schemaName="public"
-                   tableName="books_instance">
+        <loadData file="db/changelog/v1/files/books_instance.csv"
+                  schemaName="public"
+                  tableName="books_instance">
         </loadData>
+
+
+
+
         <createTable tableName="reservation">
             <column name="id" type="int" autoIncrement="true"/>
             <column name="books_instance_id" type="int">
                 <constraints nullable="false" foreignKeyName="fk_books_inst" references="books_instance(id)"/>
             </column>
-            <column name="reader_id" type="int">
-                <constraints nullable="false" foreignKeyName="fk_readers" references="readers(id)"/>
+            <column name="users_id" type="int">
+                <constraints nullable="false" foreignKeyName="fk_users" references="users(id)"/>
             </column>
             <column name="get_date" type="date"/>
             <column name="promise_date" type="date"/>
             <column name="return_date" type="date"/>
         </createTable>
-        <loadData  file="db/changelog/v1/files/reservation.csv"
-                   schemaName="public"
-                   tableName="reservation">
+        <loadData file="db/changelog/v1/files/reservation.csv"
+                  schemaName="public"
+                  tableName="reservation">
         </loadData>
+
+
     </changeSet>
 </databaseChangeLog>

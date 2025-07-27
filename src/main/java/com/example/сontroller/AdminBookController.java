@@ -7,23 +7,23 @@ import com.example.service.BookService;
 import jakarta.annotation.security.RolesAllowed;
 import org.springframework.web.bind.annotation.*;
 
+
+@RolesAllowed("ADMIN")
 @RestController
-public class BookController {
+public class AdminBookController {
 
     private final BookService bookService;
 
-    public BookController(BookService bookService) {
+    public AdminBookController(BookService bookService) {
         this.bookService = bookService;
     }
 
-    @RolesAllowed("USER")
-    @PutMapping("/book/return")
+    @PutMapping("admin/book/return")
     public void returnBook(@RequestBody BookReturnDto bookReturnDto) {
         bookService.returnBook(bookReturnDto);
     }
 
-
-    @PostMapping("/book/reserv")
+    @PostMapping("admin/book/reserv")
     public void reserveBook(@RequestBody BookReserveDto bookReserveDto) {
          bookService.reserveBook(bookReserveDto);
     }
