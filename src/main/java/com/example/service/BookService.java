@@ -2,47 +2,52 @@ package com.example.service;
 
 
 
+import com.example.dto.BookReserveDto;
+import com.example.dto.BookReturnDto;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
-import java.time.LocalDate;
 
 
 @Service
-public class BookService {
+public class AdminBookService {
 
 
     private final JdbcTemplate jdbcTemplate;
 
-    public BookService(JdbcTemplate jdbcTemplate) {
+    public AdminBookService(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void returnBook(String readerNumber, String bookNumber) {
-        String sql = "UPDATE reservation SET return_date = ? FROM public.books_instance bi, public.readers rea " +
+    public void returnBook(BookReturnDto bookReturnDto) {
+        String sqlReturn= "UPDATE reservation SET return_date = ? FROM public.books_instance bi, public.readers rea " +
                 "WHERE reservation.books_instance_id = bi.id AND reservation.reader_id = rea.id AND bi.number = ? AND rea.number = ?";
-        jdbcTemplate.update(sql, ps -> {
+        jdbcTemplate.update(sqlReturn, ps -> {
             ps.setDate(1, new Date(System.currentTimeMillis()));
-            ps.setString(2, readerNumber);
-            ps.setString(3, bookNumber);
+            ps.setString(2, bookReturnDto.getBookNumber());
+            ps.setString(3, bookReturnDto.getReaderNumber());
         });
     }
 
-    public void reserveBook(String bookNumber, String readerNumber, LocalDate promiseDate) {
+    public void reserveBook(BookReserveDto bookReserveDto) {
         String sqlCheck = "SELECT COUNT(*) FROM reservation r JOIN books_instance b ON r.books_instance_id = b.id WHERE b.number = ? AND r.return_date IS NULL";
-        Integer reserveCheck = jdbcTemplate.queryForObject(sqlCheck, Integer.class, bookNumber);
+        Integer reserveCheck = jdbcTemplate.queryForObject(sqlCheck, Integer.class, bookReserveDto.getBookNumber());
         if (reserveCheck == 0) {
             String sqlInsert = "INSERT INTO reservation (books_instance_id, reader_id, get_date, promise_date) " +
                       "SELECT bi.id, r.id, ?, ? FROM books_instance bi, public.readers r WHERE bi.number = ? AND r.number = ?";
             jdbcTemplate.update(sqlInsert, ps -> {
                 ps.setDate(1, new java.sql.Date(System.currentTimeMillis()));
-                ps.setDate(2, java.sql.Date.valueOf(promiseDate));
-                ps.setString(3, bookNumber);
-                ps.setString(4, readerNumber);
+                ps.setDate(2, java.sql.Date.valueOf(bookReserveDto.getPromiseDate()));
+                ps.setString(3, bookReserveDto.getBookNumber());
+                ps.setString(4, bookReserveDto.getReaderNumber());
             });
         } else {
             throw new IllegalStateException("Книга уже зарезервирована");
         }
     }
+
+
+
+
 }

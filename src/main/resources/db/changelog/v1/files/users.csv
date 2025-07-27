@@ -1,0 +1,4 @@
+"fio","number","admin_id","reader_id","password","login","authority","enabled"
+"Григорьева Олеся Михайловна","F-66000",1111,GrOl,ROLE_USER,
+"Сидорова Ксения Сергеевна","F-77000",2222,KzSid,ROLE_USER,
+"Григорович Сергей Михайлович","F-77000",2222,KzSid,ROLE_USER,
