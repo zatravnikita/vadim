@@ -2,6 +2,7 @@ package com.example.config;
 
 
 import com.example.service.UsersService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,6 +15,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.reactive.function.client.WebClient;
+
 import javax.sql.DataSource;
 
 
@@ -29,7 +32,6 @@ public class SecurityConfiguration {
         this.dataSource = dataSource;
         this.usersService = usersService;
     }
-
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -66,3 +68,5 @@ public class SecurityConfiguration {
         return NoOpPasswordEncoder.getInstance();
     }
 }
+
+

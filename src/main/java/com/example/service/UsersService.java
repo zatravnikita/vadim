@@ -31,14 +31,24 @@ public class UsersService implements UserDetailsService {
     }
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-            return jdbcTemplate.queryForObject(
-                    "SELECT login, password, role FROM users WHERE login = ?",
-                    (rs, rowNum) -> new User(
-                            rs.getString("login"),
-                            rs.getString("password"),
-                            Collections.singleton(new SimpleGrantedAuthority("ROLE_" + rs.getString("role")))
-                    ),
-                    username
-            );
+        return jdbcTemplate.queryForObject(
+                "SELECT login, password, authority FROM users WHERE login = ?",
+                (rs, rowNum) -> new User(
+                        rs.getString("login"),
+                        rs.getString("password"),
+                        Collections.singleton(new SimpleGrantedAuthority(rs.getString("authority")))
+                ),
+                username
+        );
     }
+
+
+
+
+
+
+
 }
+
+
+

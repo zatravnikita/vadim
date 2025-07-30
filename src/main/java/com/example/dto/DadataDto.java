@@ -3,15 +3,17 @@ package com.example.dto;
 import lombok.Data;
 import java.util.List;
 
-public class DadataResponse {
+@Data
+public class DadataDto {
+    private List<Suggestion> suggestions;
 
     @Data
-    public class DadataResponse{
-        private List<DadataAddress> suggestions;
+    public static class Suggestion {
+        private AddressData data;
     }
 
     @Data
-    public class DadataAddress{
+    public static class AddressData {
         private String result;
     }
 }
