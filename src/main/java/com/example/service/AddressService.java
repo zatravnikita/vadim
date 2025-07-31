@@ -10,11 +10,11 @@ import java.util.Collections;
 import java.util.List;
 
 @Service
-public class DadataService {
+public class AddressService {
 
     private final WebClient webClient;
 
-    public DadataService(WebClient dadataWebClient) {
+    public AddressService(WebClient dadataWebClient) {
         this.webClient = dadataWebClient;
     }
 

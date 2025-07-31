@@ -2,19 +2,14 @@ package com.example.service;
 
 import com.example.dto.BookReserveDto;
 import com.example.dto.BookReturnDto;
-import com.example.dto.DadataDto;
 
-import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 import java.sql.Date;
 import java.util.List;
 import java.util.Map;
-
-import static liquibase.hub.core.MockHubService.apiKey;
 
 
 @Service
@@ -24,12 +19,11 @@ public class BookService {
 
     private final JdbcTemplate jdbcTemplate;
     private final UsersService userService;
-    private WebClient dadataWebClient;
+
 
     public BookService(JdbcTemplate jdbcTemplate, UsersService userService) {
         this.jdbcTemplate = jdbcTemplate;
         this.userService = userService;
-        this.dadataWebClient = dadataWebClient;
     }
 
     public void returnBook(BookReturnDto bookReturnDto) {
@@ -67,15 +61,6 @@ public class BookService {
         );
     }
 
-    public Mono<String> findAddress(String query) {
-        return dadataWebClient.post()
-                .header("Authorization", "Token " + apiKey)
-                .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(List.of(query))
-                .retrieve()
-                .bodyToMono(DadataDto[].class)
-                .map(response -> response[0].getSuggestions().get(0).getData().getResult())
-                .onErrorReturn("Не удалось определить адрес");
-    }
+
 }
 
