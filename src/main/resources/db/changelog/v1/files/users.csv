@@ -1,0 +1,6 @@
+"fio","number","login","password","authority","enabled"
+"Григорьева Олеся Михайловна","F-66000",GrOl,1111,ROLE_USER,
+"Сидорова Ксения Сергеевна","F-77000",KzSid,2222,ROLE_USER,
+"Прохоров Адрей Петрович","F-88000",PrAdr,3333,ROLE_USER,
+"Нестеренко Антон Сергеевич",,AnNez,2111,ROLE_ADMIN,
+"Григорьев Игорь Павлович",,GrIg,2111,ROLE_ADMIN,
