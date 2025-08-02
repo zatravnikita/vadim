@@ -4,8 +4,6 @@ import com.example.service.AddressService;
 import jakarta.annotation.security.RolesAllowed;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RolesAllowed("ADMIN")
 @RestController
 @RequestMapping("/api/address")

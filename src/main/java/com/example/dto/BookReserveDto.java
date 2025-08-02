@@ -1,7 +1,5 @@
 package com.example.dto;
 
-import org.springframework.jdbc.core.JdbcTemplate;
-
 import java.time.LocalDate;
 
 public class BookReserveDto {

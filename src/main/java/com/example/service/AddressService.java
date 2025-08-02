@@ -6,9 +6,7 @@ import com.example.proxy.AddressProxy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-
 import java.util.List;
-
 
 @Service
 @RequiredArgsConstructor
@@ -21,4 +19,3 @@ public class AddressService {
         return source.get(0).getResult();
     }
 }
-

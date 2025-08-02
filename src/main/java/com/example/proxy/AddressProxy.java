@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
-
 @FeignClient( name = "dadata-client", url = "${dadata.api.url}", configuration = AddressConfig.class)
 public interface AddressProxy {
     @PostMapping("address")
