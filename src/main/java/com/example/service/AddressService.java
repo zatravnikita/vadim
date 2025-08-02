@@ -1,30 +1,23 @@
 package com.example.service;
 
-import com.example.dto.AddressResponse;
+import com.example.dto.AddressDto;
+
+import com.example.proxy.AddressProxy;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
 
 
-import java.util.Collections;
 import java.util.List;
 
+
 @Service
+@RequiredArgsConstructor
 public class AddressService {
 
-    private final WebClient webClient;
+    private final AddressProxy addressProxy;
 
-    public AddressService(WebClient dadataWebClient) {
-        this.webClient = dadataWebClient;
-    }
-
-    public Mono<AddressResponse> cleanAddress(String query) {
-        List<String> queries = Collections.singletonList(query);
-        return webClient.post()
-                .bodyValue(queries)
-                .header("Content-Type", "application/json")
-                .retrieve()
-                .bodyToMono(AddressResponse[].class)
-                .map(response -> response[0]);
+    public String findAddress(String query) {
+        List<AddressDto> source = addressProxy.address(List.of(query));
+        return source.get(0).getResult();
     }
 }
