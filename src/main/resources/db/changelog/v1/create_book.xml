@@ -5,10 +5,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-
-    <changeSet id="create_reservation" author="zn">
-
-
+    <changeSet id="users" author="zn">
         <createTable tableName="users">
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true"/>
@@ -26,9 +23,9 @@
                   schemaName="public"
                   tableName="users">
         </loadData>
+    </changeSet>
 
-
-
+    <changeSet id="books" author="zn">
         <createTable tableName="books">
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true"/>
@@ -40,9 +37,9 @@
                   schemaName="public"
                   tableName="books">
         </loadData>
+    </changeSet>
 
-
-
+    <changeSet id="books_instance" author="zn">
         <createTable tableName="books_instance">
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true"/>
@@ -58,10 +55,9 @@
                   schemaName="public"
                   tableName="books_instance">
         </loadData>
+    </changeSet>
 
-
-
-
+    <changeSet id="reservation" author="zn">
         <createTable tableName="reservation">
             <column name="id" type="int" autoIncrement="true"/>
             <column name="books_instance_id" type="int">
@@ -78,7 +74,6 @@
                   schemaName="public"
                   tableName="reservation">
         </loadData>
-
-
     </changeSet>
+
 </databaseChangeLog>
