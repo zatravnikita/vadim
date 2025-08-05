@@ -21,6 +21,4 @@ public class BookReturnDto {
         this.readerNumber = readerNumber;
     }
 
-
-
 }
